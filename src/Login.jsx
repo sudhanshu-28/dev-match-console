@@ -1,4 +1,51 @@
+import { useState } from "react";
+import axios from "axios";
+
 const Login = () => {
+  const [loginObj, setLoginObj] = useState({
+    emailId: "",
+    password: "",
+  });
+
+  const [isProcessing, setProcessing] = useState(false);
+
+  const handleChange = (key, value) => {
+    const obj = Object.assign({}, loginObj);
+    obj[key] = value;
+    setLoginObj(obj);
+  };
+
+  const handleLogin = async () => {
+    if (!loginObj?.emailId || !loginObj?.password) {
+      return;
+    }
+
+    setProcessing(true);
+
+    const BACKEND_URL = "http://localhost:7777";
+    const LOGIN_API = "/auth/login";
+
+    await axios
+      .post(BACKEND_URL + LOGIN_API, loginObj)
+      .then((res) => {
+        const response = res?.data;
+        const { success = false, message } = response;
+        if (success) {
+          alert(message);
+        }
+      })
+      .catch((err) => {
+        const response = err?.response?.data;
+        const { success, message } = response;
+        if (!success) {
+          alert(message || "Unable to login. Please try again.");
+        }
+      })
+      .finally(() => {
+        setProcessing(false);
+      });
+  };
+
   return (
     <div className="flex justify-center">
       <div className="card bg-base-300 w-96 shadow-xl">
@@ -27,6 +74,8 @@ const Login = () => {
                   type="text"
                   className="grow"
                   placeholder="name@company.com"
+                  value={loginObj?.emailId}
+                  onChange={(e) => handleChange("emailId", e?.target?.value)}
                 />
               </label>
             </div>
@@ -52,8 +101,9 @@ const Login = () => {
                 <input
                   type="password"
                   className="grow"
-                  value=""
                   placeholder="********"
+                  value={loginObj?.password}
+                  onChange={(e) => handleChange("password", e?.target?.value)}
                 />
               </label>
             </div>
@@ -61,10 +111,16 @@ const Login = () => {
 
           {/* Signin button  */}
           <div className="flex justify-start mt-3.5">
-            <button className="btn btn-primary btn-square w-full">
-              {`Sign in`}
-              {/* <span className="loading loading-spinner"></span> */}
-              {/* loading */}
+            <button
+              className={`btn btn-primary btn-square w-full ${
+                isProcessing ? `btn-disabled` : ``
+              }`}
+              onClick={handleLogin}
+            >
+              {isProcessing && (
+                <span className="loading loading-spinner"></span>
+              )}
+              {isProcessing ? `Signing in...` : `Sign in`}
             </button>
           </div>
 
