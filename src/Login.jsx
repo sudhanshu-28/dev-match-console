@@ -3,8 +3,8 @@ import axios from "axios";
 
 const Login = () => {
   const [loginObj, setLoginObj] = useState({
-    emailId: "",
-    password: "",
+    emailId: "sudhanshurai@gmail.com",
+    password: "Test@123",
   });
 
   const [isProcessing, setProcessing] = useState(false);
@@ -26,7 +26,10 @@ const Login = () => {
     const LOGIN_API = "/auth/login";
 
     await axios
-      .post(BACKEND_URL + LOGIN_API, loginObj)
+      .post(BACKEND_URL + LOGIN_API, loginObj, {
+        timeout: 30000,
+        withCredentials: true,
+      })
       .then((res) => {
         const response = res?.data;
         const { success = false, message } = response;
