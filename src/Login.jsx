@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { addUser } from "./utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [loginObj, setLoginObj] = useState({
@@ -57,6 +60,7 @@ const Login = () => {
           if (data) {
             dispatch(addUser(data));
           }
+          navigate("/feed");
 
           setNotification({
             show: true,

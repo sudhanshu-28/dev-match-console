@@ -1,13 +1,15 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { removeUser } from "./utils/userSlice";
 
 const DEFAULT_PHOTO_URL =
   "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
 const NavBar = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const user = useSelector((store) => store?.user);
 
   const BACKEND_URL = "http://localhost:7777";
@@ -20,6 +22,7 @@ const NavBar = () => {
         const response = res?.data;
         const { success = false } = response;
         if (success) {
+          dispatch(removeUser());
           navigate("/login");
         }
       })
@@ -52,13 +55,7 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
+                <a>{`Profile`}</a>
               </li>
               <li onClick={handleLogout}>
                 <div>{`Logout`}</div>
