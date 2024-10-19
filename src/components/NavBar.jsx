@@ -2,11 +2,10 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { removeUser } from "./utils/userSlice";
-import { BASE_URL, LOGOUT_API } from "./api-config/endpoints";
+import { removeUser } from "../utils/userSlice";
 
-const DEFAULT_PHOTO_URL =
-  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
+import { DEFAULT_PHOTO_URL } from "../api-config/constants";
+import { BASE_URL, LOGOUT_API } from "../api-config/endpoints";
 
 const NavBar = () => {
   const navigate = useNavigate();
