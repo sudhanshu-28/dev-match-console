@@ -1,4 +1,25 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const BACKEND_URL = "http://localhost:7777";
+  const LOGOUT_API = "/auth/logout";
+
+  const handleLogout = async () => {
+    await axios
+      .get(BACKEND_URL + LOGOUT_API, { withCredentials: true })
+      .then((res) => {
+        const response = res?.data;
+        const { success = false } = response;
+        if (success) {
+          navigate("/login");
+        }
+      })
+      .catch(() => {});
+  };
+
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
@@ -64,8 +85,8 @@ const NavBar = () => {
             <li>
               <a>Settings</a>
             </li>
-            <li>
-              <a>Logout</a>
+            <li onClick={handleLogout}>
+              <div>{`Logout`}</div>
             </li>
           </ul>
         </div>
