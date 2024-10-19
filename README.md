@@ -11,3 +11,6 @@
 - Create Footer
 - Logo: https://www.svgrepo.com/svg/445298/people-distance-solid
 - Create Login Page
+- Install axios
+- CORS - install cors on backend, add middleware to app with configurations: origin: url & credentials:true
+- Whenever making an API call so pass the options as credentials: true (without this config authentication will failed, it will not pass token back to other API calls)
