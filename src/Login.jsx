@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "./utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loginObj, setLoginObj] = useState({
     emailId: "sudhanshurai@gmail.com",
@@ -50,14 +51,18 @@ const Login = () => {
     })
       .then((res) => {
         const response = res?.data;
-        const { success = false, message } = response;
+        const { success = false, message, data = null } = response;
         if (success) {
+          // Update user details and stored data in redux store
+          if (data) {
+            dispatch(addUser(data));
+          }
+
           setNotification({
             show: true,
             success: true,
             message: message || "Logged in successfully!",
           });
-          navigate("/feed");
         }
       })
       .catch((err) => {
