@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { removeUser } from "./utils/userSlice";
+import { BASE_URL, LOGOUT_API } from "./api-config/endpoints";
 
 const DEFAULT_PHOTO_URL =
   "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
@@ -12,12 +13,9 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store?.user);
 
-  const BACKEND_URL = "http://localhost:7777";
-  const LOGOUT_API = "/auth/logout";
-
   const handleLogout = async () => {
     await axios
-      .get(BACKEND_URL + LOGOUT_API, { withCredentials: true })
+      .get(BASE_URL + LOGOUT_API, { withCredentials: true })
       .then((res) => {
         const response = res?.data;
         const { success = false } = response;

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addUser } from "./utils/userSlice";
+import { BASE_URL, LOGIN_API } from "./api-config/endpoints";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,9 +35,6 @@ const Login = () => {
 
     setProcessing(true);
 
-    const BACKEND_URL = "http://localhost:7777";
-    const LOGIN_API = "/auth/login";
-
     // Approach 1: To write API call with axios
     // await axios
     // .post(BACKEND_URL + LOGIN_API, loginObj, {
@@ -47,7 +45,7 @@ const Login = () => {
     // Approach 2: To write API call with axios
     await axios({
       method: "post",
-      url: BACKEND_URL + LOGIN_API,
+      url: BASE_URL + LOGIN_API,
       data: loginObj,
       timeout: 2000,
       withCredentials: true,
@@ -60,7 +58,7 @@ const Login = () => {
           if (data) {
             dispatch(addUser(data));
           }
-          navigate("/feed");
+          navigate("/");
 
           setNotification({
             show: true,
