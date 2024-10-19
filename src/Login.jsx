@@ -25,11 +25,21 @@ const Login = () => {
     const BACKEND_URL = "http://localhost:7777";
     const LOGIN_API = "/auth/login";
 
-    await axios
-      .post(BACKEND_URL + LOGIN_API, loginObj, {
-        timeout: 30000,
-        withCredentials: true,
-      })
+    // Approach 1: To write API call with axios
+    // await axios
+    // .post(BACKEND_URL + LOGIN_API, loginObj, {
+    //   timeout: 2000,
+    //   withCredentials: true,
+    // });
+
+    // Approach 2: To write API call with axios
+    await axios({
+      method: "post",
+      url: BACKEND_URL + LOGIN_API,
+      data: loginObj,
+      timeout: 2000,
+      withCredentials: true,
+    })
       .then((res) => {
         const response = res?.data;
         const { success = false, message } = response;
