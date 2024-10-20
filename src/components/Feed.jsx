@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import { showErrorMessage } from "../utils/notifySlice";
 
+import UserCard from "./UserCard";
+
 import { BASE_URL, FEED_API } from "../api-config/endpoints";
 
 const Feed = () => {
@@ -39,11 +41,7 @@ const Feed = () => {
     }
   }, [feedData]);
 
-  return (
-    <>
-      <div>Feed Page</div>
-    </>
-  );
+  return <div>{feedData && <UserCard user={feedData[0]} />}</div>;
 };
 
 export default Feed;
