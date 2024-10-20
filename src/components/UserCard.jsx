@@ -13,15 +13,19 @@ const UserCard = ({ user }) => {
   const fullName = `${firstName} ${lastName}`;
 
   return (
-    <div className="card card-compact bg-base-100 w-96 shadow-xl">
-      <figure>
-        <img src={photoUrl} alt={fullName} />
+    <div className="card bg-base-100 w-96 shadow-xl">
+      <figure className="w-96 h-72 overflow-hidden">
+        <img
+          src={photoUrl}
+          alt="Profile Photo"
+          className="object-fill w-full h-full"
+        />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{fullName}</h2>
         <p>{`${age ? `${age}, ` : ``}${gender ? `${gender}` : ``}`}</p>
         <p>{about}</p>
-        <div className="card-actions justify-center my-4">
+        <div className="card-actions justify-center my-8">
           <button className="btn btn-secondary">{`Ignore`}</button>
           <button className="btn btn-accent">{`Interested`}</button>
         </div>

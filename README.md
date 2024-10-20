@@ -27,3 +27,4 @@
 - react-toastify added for Notification
 - Integrate Notification with react-toastify & redux-toolkit
 - Feed Page, Redux, API Integration.
+- Create UserCard component & add Props validation.
