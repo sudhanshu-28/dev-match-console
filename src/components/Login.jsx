@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addUser } from "../utils/userSlice";
+import { showSuccessMessage, showErrorMessage } from "../utils/notifySlice";
+
 import { BASE_URL, LOGIN_API } from "../api-config/endpoints";
 
 const Login = () => {
@@ -15,11 +17,6 @@ const Login = () => {
     password: "Test@123",
   });
 
-  const [notification, setNotification] = useState({
-    show: false,
-    success: false,
-    message: "Default message.",
-  });
   const [isProcessing, setProcessing] = useState(false);
 
   const handleChange = (key, value) => {
@@ -52,48 +49,32 @@ const Login = () => {
     })
       .then((res) => {
         const response = res?.data;
-        const { success = false, message, data = null } = response;
-        if (success) {
-          // Update user details and stored data in redux store
-          if (data) {
-            dispatch(addUser(data));
-          }
+        const { success = false, data = null } = response;
+        if (success && data) {
+          dispatch(addUser(data));
+          dispatch(
+            showSuccessMessage({
+              message: "Logged in successfully!",
+            })
+          );
           navigate("/");
-
-          setNotification({
-            show: true,
-            success: true,
-            message: message || "Logged in successfully!",
-          });
         }
       })
       .catch((err) => {
         const response = err?.response?.data;
         const { success, message } = response;
         if (!success) {
-          setNotification({
-            show: true,
-            success: false,
-            message: message || "Unable to login. Please try again.",
-          });
+          dispatch(
+            showErrorMessage({
+              message: message || "Unable to login. Please try again.",
+            })
+          );
         }
       })
       .finally(() => {
         setProcessing(false);
       });
   };
-
-  useEffect(() => {
-    if (notification?.show) {
-      setTimeout(() => {
-        setNotification({
-          show: false,
-          success: false,
-          message: "Default message.",
-        });
-      }, 3000);
-    }
-  }, [notification]);
 
   return (
     <>
@@ -186,18 +167,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      {notification?.show && (
-        <div className="toast toast-top toast-center">
-          <div
-            className={`alert ${
-              notification?.success ? `alert-success` : `alert-error`
-            }`}
-          >
-            <span>{notification?.message}</span>
-          </div>
-        </div>
-      )}
     </>
   );
 };

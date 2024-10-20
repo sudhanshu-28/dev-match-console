@@ -2,12 +2,28 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, Zoom, toast } from "react-toastify";
 
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 
 import { addUser } from "../utils/userSlice";
+import { clearMessage } from "../utils/notifySlice";
 import { BASE_URL, PROFILE_VIEW_API } from "../api-config/endpoints";
+
+import "react-toastify/dist/ReactToastify.css";
+
+const toastOptions = {
+  position: "top-center",
+  autoClose: 1000,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: false,
+  progress: undefined,
+  theme: "colored",
+  transition: Zoom,
+};
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -18,6 +34,25 @@ const Body = () => {
   const currentPath = location.pathname;
 
   const userData = useSelector((store) => store?.user);
+  const notifyData = useSelector((store) => store?.notify);
+
+  const triggerToastAutomatically = (notifyData) => {
+    const { type = null, message } = notifyData;
+
+    switch (type) {
+      case "success":
+        toast.success(message, toastOptions);
+        break;
+      case "error":
+        toast.error(message, toastOptions);
+        break;
+      default:
+        break;
+    }
+
+    // Dispatch to clear the message after showing the toast
+    dispatch(clearMessage());
+  };
 
   const fetchUserDetails = async () => {
     try {
@@ -46,11 +81,18 @@ const Body = () => {
     }
   }, [userData, currentPath]);
 
+  useEffect(() => {
+    if (notifyData) {
+      triggerToastAutomatically(notifyData);
+    }
+  }, [notifyData]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
 
       <div className="flex-grow flex justify-center items-center bg-base-200">
+        <ToastContainer />
         <Outlet />
       </div>
 

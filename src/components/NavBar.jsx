@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { removeUser } from "../utils/userSlice";
+import { showSuccessMessage, showErrorMessage } from "../utils/notifySlice";
 
 import { DEFAULT_PHOTO_URL } from "../api-config/constants";
 import { BASE_URL, LOGOUT_API } from "../api-config/endpoints";
@@ -20,10 +21,21 @@ const NavBar = () => {
         const { success = false } = response;
         if (success) {
           dispatch(removeUser());
+          dispatch(
+            showSuccessMessage({
+              message: "ogged out successfully!",
+            })
+          );
           navigate("/login");
         }
       })
-      .catch(() => {});
+      .catch((error) => {
+        dispatch(
+          showErrorMessage({
+            message: error?.message || "Failed to log out. Please try again.",
+          })
+        );
+      });
   };
 
   return (

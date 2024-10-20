@@ -21,3 +21,8 @@
 - NavBar should update as soon as User login. (With Redux store subscribe the component)
 - Refactor code - create api/network and other URL file.
 - Create folder structure and refactor code.
+- Restrict access to other web pages without authentication - token check.
+- If token is not present redirect user to login page
+- Logout
+- react-toastify added for Notification
+- Integrate Notification with react-toastify & redux-toolkit
