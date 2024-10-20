@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { removeUser } from "../utils/userSlice";
 
@@ -29,7 +29,7 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">DevMatch</a>
+        <Link to={"/"} className="btn btn-ghost text-xl">{`DevMatch`}</Link>
       </div>
       <div className="flex-none mx-4 gap-4">
         {user && <span>{`Welcome, ${user?.firstName || `User`}`}</span>}
@@ -52,7 +52,7 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a>{`Profile`}</a>
+                <Link to={"/profile"}>{`Profile`}</Link>
               </li>
               <li onClick={handleLogout}>
                 <div>{`Logout`}</div>
