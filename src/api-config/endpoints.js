@@ -10,3 +10,4 @@ export const PROFILE_EDIT_API = "/profile/edit";
 
 // User
 export const FEED_API = "/user/feed";
+export const CONNECTIONS_API = "/user/connections";
