@@ -23,6 +23,7 @@
 - Create folder structure and refactor code.
 - Restrict access to other web pages without authentication - token check.
 - If token is not present redirect user to login page
-- Logout
+- Logout Functionality - API Integration & set notification.
 - react-toastify added for Notification
 - Integrate Notification with react-toastify & redux-toolkit
+- Feed Page, Redux, API Integration.

@@ -6,3 +6,6 @@ export const LOGOUT_API = "/auth/logout";
 
 // Profile
 export const PROFILE_VIEW_API = "/profile/view";
+
+// User
+export const FEED_API = "/user/feed";
