@@ -21,20 +21,14 @@ const NavBar = () => {
         const { success = false } = response;
         if (success) {
           dispatch(removeUser());
-          dispatch(
-            showSuccessMessage({
-              message: "ogged out successfully!",
-            })
-          );
+          dispatch(showSuccessMessage("Logged out successfully!"));
           navigate("/login");
         }
       })
       .catch((error) => {
-        dispatch(
-          showErrorMessage({
-            message: error?.message || "Failed to log out. Please try again.",
-          })
-        );
+        const message =
+          error?.message || "Failed to log out. Please try again.";
+        dispatch(showErrorMessage(message));
       });
   };
 

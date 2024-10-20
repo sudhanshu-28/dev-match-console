@@ -52,11 +52,7 @@ const Login = () => {
         const { success = false, data = null } = response;
         if (success && data) {
           dispatch(addUser(data));
-          dispatch(
-            showSuccessMessage({
-              message: "Logged in successfully!",
-            })
-          );
+          dispatch(showSuccessMessage("Logged in successfully!"));
           navigate("/");
         }
       })
@@ -64,11 +60,8 @@ const Login = () => {
         const response = err?.response?.data;
         const { success, message } = response;
         if (!success) {
-          dispatch(
-            showErrorMessage({
-              message: message || "Unable to login. Please try again.",
-            })
-          );
+          const displayMsg = message || "Unable to login. Please try again.";
+          dispatch(showErrorMessage(displayMsg));
         }
       })
       .finally(() => {

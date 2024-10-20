@@ -9,7 +9,7 @@ const notifySlice = createSlice({
 
       return {
         type: "success",
-        message: payload?.message,
+        message: payload,
       };
     },
     showErrorMessage: (state, action) => {
@@ -17,7 +17,7 @@ const notifySlice = createSlice({
 
       return {
         type: "error",
-        message: payload?.message,
+        message: payload,
       };
     },
     clearMessage: () => {
