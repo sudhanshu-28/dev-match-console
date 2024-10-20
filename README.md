@@ -28,3 +28,5 @@
 - Integrate Notification with react-toastify & redux-toolkit
 - Feed Page, Redux, API Integration.
 - Create UserCard component & add Props validation.
+- Profile Page create and add form details.
+- Add Preview in Profile page.
