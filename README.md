@@ -30,3 +30,15 @@
 - Create UserCard component & add Props validation.
 - Profile Page create and add form details.
 - Add Preview in Profile page.
+- Connections Page created.
+- Connection Request Page created.
+- Feature - Accept/Request profile completed.
+- Skeleton loaded component created.
+- Redux store updated for Connections & Request with data & loading state
+- Enhancement of Connections & Request page completed.
+
+# Remaining
+
+- Send/Ignore user card from Feed.
+- Signup UI creation.
+- End2End testing of Application.
