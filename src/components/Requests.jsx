@@ -64,6 +64,7 @@ const Requests = () => {
       .catch((err) => {
         const response = err?.response?.data;
         const { success, message } = response;
+
         if (!success) {
           const displayMsg = message || `Failed to review Connection request.`;
           dispatch(showErrorMessage(displayMsg));
