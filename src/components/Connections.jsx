@@ -50,24 +50,27 @@ const Connections = () => {
         </div>
         <div className="border-t border-gray-800"></div>
 
-        {connections && connections.length !== 0 ? (
-          <>
-            {connections.map((record) => {
-              const {
-                _id: userId,
-                firstName,
-                lastName,
-                photoUrl,
-                age,
-                gender,
-                about,
-              } = record;
+        <div className="p-5 flex flex-col gap-4">
+          {connections && connections.length !== 0 ? (
+            <>
+              {connections.map((record) => {
+                const {
+                  _id: userId,
+                  firstName,
+                  lastName,
+                  photoUrl,
+                  age,
+                  gender,
+                  about,
+                } = record;
 
-              const fullName = `${firstName} ${lastName}`;
+                const fullName = `${firstName} ${lastName}`;
 
-              return (
-                <div key={userId} className="p-5 flex flex-col gap-4">
-                  <div className="w-full bg-base-100 flex h-24 rounded-xl p-4 gap-5">
+                return (
+                  <div
+                    key={userId}
+                    className="w-full bg-base-100 flex h-24 rounded-xl p-4 gap-5"
+                  >
                     <div className="avatar">
                       <div className="w-16 rounded-xl">
                         <img src={photoUrl} />
@@ -84,15 +87,15 @@ const Connections = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </>
-        ) : (
-          <div className="p-5 flex justify-center">
-            <h2>{`No connections found.`}</h2>
-          </div>
-        )}
+                );
+              })}
+            </>
+          ) : (
+            <div className="p-5 flex justify-center">
+              <h2>{`No connections found.`}</h2>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
