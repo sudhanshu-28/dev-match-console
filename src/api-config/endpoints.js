@@ -14,5 +14,4 @@ export const CONNECTIONS_API = "/user/connections";
 
 // Request
 export const REQUEST_RECEIVED_API = "/user/requests/received";
-export const REQUEST_ACCEPT_API = "/request/review/accepted";
-export const REQUEST_REJECT_API = "/request/review/rejected";
+export const REQUEST_REVIEW_API = "/request/review";

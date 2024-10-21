@@ -6,9 +6,8 @@ import { showErrorMessage, showSuccessMessage } from "../utils/notifySlice";
 
 import {
   BASE_URL,
-  REQUEST_ACCEPT_API,
+  REQUEST_REVIEW_API,
   REQUEST_RECEIVED_API,
-  REQUEST_REJECT_API,
 } from "../api-config/endpoints";
 
 const Requests = () => {
@@ -31,35 +30,12 @@ const Requests = () => {
       });
   };
 
-  const handleRequestAccept = async (connectionId) => {
-    await axios
-      .post(
-        `${BASE_URL}${REQUEST_ACCEPT_API}/${connectionId}`,
-        {},
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const response = res?.data;
-        const { success = false, data = null, message } = response;
-        if (success && data) {
-          fetchConnectionRequests();
-          dispatch(showSuccessMessage(message));
-        }
-      })
-      .catch((err) => {
-        const response = err?.response?.data;
-        const { success, message } = response;
-        if (!success) {
-          const displayMsg = message || "Failed to accept Connection request.";
-          dispatch(showErrorMessage(displayMsg));
-        }
-      });
-  };
+  const handleRequestReview = async (connectionId, type) => {
+    if (!connectionId || !type) return;
 
-  const handleRequestReject = async (connectionId) => {
     await axios
       .post(
-        `${BASE_URL}${REQUEST_REJECT_API}/${connectionId}`,
+        `${BASE_URL}${REQUEST_REVIEW_API}/${type}/${connectionId}`,
         {},
         { withCredentials: true }
       )
@@ -75,7 +51,7 @@ const Requests = () => {
         const response = err?.response?.data;
         const { success, message } = response;
         if (!success) {
-          const displayMsg = message || "Failed to reject Connection request.";
+          const displayMsg = message || `Failed to review Connection request.`;
           dispatch(showErrorMessage(displayMsg));
         }
       });
@@ -130,13 +106,17 @@ const Requests = () => {
                     <div className="flex items-center justify-center gap-2">
                       <button
                         className="btn btn-sm btn-ghost"
-                        onClick={() => handleRequestReject(connectionId)}
+                        onClick={() =>
+                          handleRequestReview(connectionId, "rejected")
+                        }
                       >
                         {`Reject`}
                       </button>
                       <button
                         className="btn btn-sm btn-outline btn-primary"
-                        onClick={() => handleRequestAccept(connectionId)}
+                        onClick={() =>
+                          handleRequestReview(connectionId, "accepted")
+                        }
                       >
                         {`Accept`}
                       </button>
