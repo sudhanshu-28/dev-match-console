@@ -1,20 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { showErrorMessage } from "../utils/notifySlice";
-import { addConnections } from "../utils/connectionSlice";
+import {
+  addConnections,
+  completeFetchingConnections,
+  startFetchingConnections,
+} from "../utils/connectionSlice";
+
+import { ProfileSkeleton } from "./Skeleton";
 
 import { BASE_URL, CONNECTIONS_API } from "../api-config/endpoints";
 
 const Connections = () => {
   const dispatch = useDispatch();
 
-  const connections = useSelector((store) => store?.connections);
-  const [isFetching, setFetching] = useState(true);
-  console.log(isFetching);
+  const { data: connections, isFetching = false } = useSelector(
+    (store) => store?.connections
+  );
 
   const fetchConnections = async () => {
+    dispatch(startFetchingConnections());
+
     await axios
       .get(BASE_URL + CONNECTIONS_API, { withCredentials: true })
       .then((res) => {
@@ -34,7 +42,7 @@ const Connections = () => {
         }
       })
       .finally(() => {
-        setFetching(false);
+        dispatch(completeFetchingConnections());
       });
   };
 
@@ -51,49 +59,59 @@ const Connections = () => {
         <div className="border-t border-gray-800"></div>
 
         <div className="p-5 flex flex-col gap-4">
-          {connections && connections.length !== 0 ? (
+          {isFetching ? (
             <>
-              {connections.map((record) => {
-                const {
-                  _id: userId,
-                  firstName,
-                  lastName,
-                  photoUrl,
-                  age,
-                  gender,
-                  about,
-                } = record;
-
-                const fullName = `${firstName} ${lastName}`;
-
-                return (
-                  <div
-                    key={userId}
-                    className="w-full bg-base-100 flex h-24 rounded-xl p-4 gap-5"
-                  >
-                    <div className="avatar">
-                      <div className="w-16 rounded-xl">
-                        <img src={photoUrl} />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-center w-full">
-                      <div className="font-bold">{fullName}</div>
-                      {gender && age && (
-                        <div className="text-sm opacity-60">{`${gender}, ${age}`}</div>
-                      )}
-                      <div className="text-sm opacity-70 line-clamp-1">
-                        {about}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              <ProfileSkeleton />
+              <ProfileSkeleton />
+              <ProfileSkeleton />
             </>
           ) : (
-            <div className="p-5 flex justify-center">
-              <h2>{`No connections found.`}</h2>
-            </div>
+            <>
+              {connections && connections.length !== 0 ? (
+                <>
+                  {connections.map((record) => {
+                    const {
+                      _id: userId,
+                      firstName,
+                      lastName,
+                      photoUrl,
+                      age,
+                      gender,
+                      about,
+                    } = record;
+
+                    const fullName = `${firstName} ${lastName}`;
+
+                    return (
+                      <div
+                        key={userId}
+                        className="w-full bg-base-100 flex h-24 rounded-xl p-4 gap-5"
+                      >
+                        <div className="avatar">
+                          <div className="w-16 rounded-xl">
+                            <img src={photoUrl} />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col justify-center w-full">
+                          <div className="font-bold">{fullName}</div>
+                          {gender && age && (
+                            <div className="text-sm opacity-60">{`${gender}, ${age}`}</div>
+                          )}
+                          <div className="text-sm opacity-70 line-clamp-1">
+                            {about}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <div className="p-5 flex justify-center">
+                  <h2>{`No connections found.`}</h2>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
