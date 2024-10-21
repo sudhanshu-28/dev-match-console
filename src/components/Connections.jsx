@@ -14,11 +14,11 @@ const Connections = () => {
 
   const connections = useSelector((store) => store?.connections);
   const [isFetching, setFetching] = useState(true);
-
   console.log(isFetching);
 
   const fetchConnections = async () => {
-    await axios(BASE_URL + CONNECTIONS_API, { withCredentials: true })
+    await axios
+      .get(BASE_URL + CONNECTIONS_API, { withCredentials: true })
       .then((res) => {
         const response = res?.data;
         const { success = false, data = null } = response;

@@ -11,3 +11,6 @@ export const PROFILE_EDIT_API = "/profile/edit";
 // User
 export const FEED_API = "/user/feed";
 export const CONNECTIONS_API = "/user/connections";
+
+// Request
+export const REQUEST_RECEIVED_API = "/user/requests/received";

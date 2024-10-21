@@ -9,7 +9,17 @@ import Footer from "./Footer";
 
 import { addUser } from "../utils/userSlice";
 import { clearMessage } from "../utils/notifySlice";
-import { BASE_URL, PROFILE_VIEW_API } from "../api-config/endpoints";
+
+import {
+  addConnectionRequests,
+  completeFetchingConnectionRequests,
+  startFetchingConnectionRequests,
+} from "../utils/requestSlice";
+import {
+  BASE_URL,
+  PROFILE_VIEW_API,
+  REQUEST_RECEIVED_API,
+} from "../api-config/endpoints";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,6 +45,7 @@ const Body = () => {
 
   const userData = useSelector((store) => store?.user);
   const notifyData = useSelector((store) => store?.notify);
+  const { data: requestData } = useSelector((store) => store?.request);
 
   const triggerToastAutomatically = (notifyData) => {
     const { type = null, message } = notifyData;
@@ -75,9 +86,35 @@ const Body = () => {
     }
   };
 
+  const fetchConnectionRequests = async () => {
+    dispatch(startFetchingConnectionRequests());
+
+    await axios
+      .get(BASE_URL + REQUEST_RECEIVED_API, { withCredentials: true })
+      .then((res) => {
+        const response = res?.data;
+        const { success = false, data = null } = response;
+        if (success && data && data.length !== 0) {
+          dispatch(addConnectionRequests(data));
+        }
+      })
+      .catch((err) => {
+        console.error(err?.message || err);
+      })
+      .finally(() => {
+        dispatch(completeFetchingConnectionRequests());
+      });
+  };
+
   useEffect(() => {
     if (!userData && currentPath !== LOGIN_PATH) {
       fetchUserDetails();
+    }
+  }, [userData, currentPath]);
+
+  useEffect(() => {
+    if (!requestData && currentPath !== LOGIN_PATH) {
+      fetchConnectionRequests();
     }
   }, [userData, currentPath]);
 
