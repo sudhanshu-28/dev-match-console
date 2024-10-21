@@ -2,6 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addConnectionRequests } from "../utils/requestSlice";
+import { showErrorMessage, showSuccessMessage } from "../utils/notifySlice";
 
 import {
   BASE_URL,
@@ -9,7 +10,6 @@ import {
   REQUEST_RECEIVED_API,
   REQUEST_REJECT_API,
 } from "../api-config/endpoints";
-import { showErrorMessage, showSuccessMessage } from "../utils/notifySlice";
 
 const Requests = () => {
   const dispatch = useDispatch();
