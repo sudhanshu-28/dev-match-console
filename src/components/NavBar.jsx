@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,14 +7,24 @@ import { removeUser } from "../utils/userSlice";
 import { showSuccessMessage, showErrorMessage } from "../utils/notifySlice";
 
 import { DEFAULT_PHOTO_URL } from "../api-config/constants";
+
 import { BASE_URL, LOGOUT_API } from "../api-config/endpoints";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   const user = useSelector((store) => store?.user);
   const { data: connectionRequests } = useSelector((store) => store?.request);
+
+  // Toggle dropdown visibility
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
+
+  // Close dropdown
+  const closeDropdown = () => setIsOpen(false);
 
   const handleLogout = async () => {
     await axios
@@ -64,11 +75,12 @@ const NavBar = () => {
               {connectionRequests ? connectionRequests.length : 0}
             </span>
           </Link>
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end" ref={dropdownRef}>
             <div
               tabIndex={0}
               role="button"
               className="btn btn-ghost btn-circle avatar"
+              onClick={toggleDropdown}
             >
               <div className="w-10 rounded-full">
                 <img
@@ -77,23 +89,38 @@ const NavBar = () => {
                 />
               </div>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to={"/profile"}>{`Profile`}</Link>
-              </li>
-              <li>
-                <Link to={"/connections"}>{`My Connections`}</Link>
-              </li>
-              <li>
-                <Link to={"/requests"}>{`Connection Requests`}</Link>
-              </li>
-              <li onClick={handleLogout}>
-                <div>{`Logout`}</div>
-              </li>
-            </ul>
+            {isOpen && (
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <Link
+                    to={"/profile"}
+                    onClick={closeDropdown}
+                  >{`Profile`}</Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/connections"}
+                    onClick={closeDropdown}
+                  >{`My Connections`}</Link>
+                </li>
+                <li>
+                  <Link to={"/requests"} onClick={closeDropdown}>
+                    {`Connection Requests`}
+                  </Link>
+                </li>
+                <li
+                  onClick={() => {
+                    handleLogout();
+                    closeDropdown();
+                  }}
+                >
+                  <div>{`Logout`}</div>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       )}
