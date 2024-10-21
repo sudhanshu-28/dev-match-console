@@ -9,6 +9,21 @@ import UserCard from "./UserCard";
 
 import { BASE_URL, FEED_API } from "../api-config/endpoints";
 
+const EmptyFeed = ({ fetchFeeds }) => (
+  <div className="card bg-base-100 w-96 shadow-xl">
+    <figure className="w-96 h-72 overflow-hidden flex flex-col p-12 text-center gap-6">
+      <h1 className="text-lg">
+        Taking a break to find more great matches for you!
+      </h1>
+      <h1 className="text-lg">Come back soon for more.</h1>
+      <button
+        className="btn btn-primary"
+        onClick={fetchFeeds}
+      >{`Find More Connections`}</button>
+    </figure>
+  </div>
+);
+
 const Feed = () => {
   const dispatch = useDispatch();
 
@@ -36,14 +51,18 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    if (!feedData) {
+    if (!feedData || feedData.length === 0) {
       fetchFeeds();
     }
   }, [feedData]);
 
   return (
     <div className="flex justify-center items-center w-full my-6">
-      {feedData && <UserCard user={feedData[0]} />}
+      {!feedData || feedData?.length === 0 ? (
+        <EmptyFeed fetchFeeds={fetchFeeds} />
+      ) : (
+        feedData?.[0] && <UserCard user={feedData[0]} />
+      )}
     </div>
   );
 };
