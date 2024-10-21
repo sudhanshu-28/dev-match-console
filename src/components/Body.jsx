@@ -91,7 +91,7 @@ const Body = () => {
     <div className="flex flex-col min-h-screen">
       <NavBar />
 
-      <div className="flex-grow flex justify-center items-center bg-base-200">
+      <div className="flex-grow flex bg-base-200">
         <ToastContainer />
         <Outlet />
       </div>

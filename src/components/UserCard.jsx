@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, isPreview = false }) => {
   const {
     firstName,
     lastName,
@@ -11,6 +11,10 @@ const UserCard = ({ user }) => {
   } = user;
 
   const fullName = `${firstName} ${lastName}`;
+
+  const handleClick = (action) => {
+    alert(`${action} profile`);
+  };
 
   return (
     <div className="card bg-base-100 w-96 shadow-xl">
@@ -26,8 +30,14 @@ const UserCard = ({ user }) => {
         <p>{`${age ? `${age}, ` : ``}${gender ? `${gender}` : ``}`}</p>
         <p>{about}</p>
         <div className="card-actions justify-center my-8">
-          <button className="btn btn-secondary">{`Ignore`}</button>
-          <button className="btn btn-accent">{`Interested`}</button>
+          <button
+            className="btn btn-secondary"
+            onClick={isPreview ? null : () => handleClick("Ignore")}
+          >{`Ignore`}</button>
+          <button
+            className="btn btn-accent"
+            onClick={isPreview ? null : () => handleClick("Interested")}
+          >{`Interested`}</button>
         </div>
       </div>
     </div>
@@ -44,6 +54,7 @@ UserCard.prototype = {
     age: PropTypes.string,
     gender: PropTypes.string,
   }).isRequired,
+  isPreview: PropTypes.bool,
 };
 
 export default UserCard;

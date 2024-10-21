@@ -70,7 +70,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full items-center">
       <div className="card bg-base-300 w-96 shadow-xl">
         <div className="card-body">
           {/* Title  */}

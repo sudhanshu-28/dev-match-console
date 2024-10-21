@@ -43,6 +43,7 @@ const Profile = () => {
 
         if (success && data) {
           dispatch(addUser(data));
+          window.scrollTo(0, 0);
           dispatch(showSuccessMessage("Profile updated successfully!"));
         }
       })
@@ -61,6 +62,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (user) {
       setUserDetail(user);
     }
@@ -76,13 +81,13 @@ const Profile = () => {
   if (!user) return;
 
   return (
-    <div className="flex w-full flex-col lg:flex-row px-6 justify-center gap-6 py-10">
+    <div className="flex w-full flex-col lg:flex-row justify-center my-6 mx-6 gap-2.5 ">
       <div className="card bg-base-300 w-full shadow-xl">
         <div className="card-body">
           {/* Title  */}
           <h2 className="card-title">{`Update Profile`}</h2>
 
-          <div className="mt-4">
+          <div className="mt-3">
             <div className="flex w-full gap-6">
               {/* First Name */}
               <div className="w-full">
@@ -232,8 +237,8 @@ const Profile = () => {
         <div className="card-body">
           {/* Header  */}
           <h2 className="card-title">{`Live Preview`}</h2>
-          <div className="flex justify-center mt-4">
-            {userDetail && <UserCard user={userDetail} />}
+          <div className="flex justify-center my-3">
+            {userDetail && <UserCard user={userDetail} isPreview={true} />}
           </div>
         </div>
       </div>
