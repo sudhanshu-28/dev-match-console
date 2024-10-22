@@ -10,6 +10,7 @@ import Feed from "./components/Feed";
 import Profile from "./components/Profile";
 import Requests from "./components/Requests.jsx";
 import Connections from "./components/Connections.jsx";
+import SocketConnection from "./components/SocketConnection.jsx";
 import PageNotFound from "./components/PageNotFound.jsx";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/connections" element={<Connections />} />
+            <Route path="/socket-connection" element={<SocketConnection />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

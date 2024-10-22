@@ -107,6 +107,12 @@ const NavBar = () => {
                   >{`My Connections`}</Link>
                 </li>
                 <li>
+                  <Link
+                    to={"/socket-connection"}
+                    onClick={closeDropdown}
+                  >{`Socket Connection`}</Link>
+                </li>
+                <li>
                   <Link to={"/requests"} onClick={closeDropdown}>
                     {`Connection Requests`}
                   </Link>
