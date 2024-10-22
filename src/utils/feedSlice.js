@@ -13,7 +13,8 @@ const feedSlice = createSlice({
       state.data = action?.payload;
     },
     removeFeed: (state, action) => {
-      const newFeed = state.filter((user) => user?._id !== action.payload);
+      const { data } = state;
+      const newFeed = data.filter((user) => user?._id !== action.payload);
       state.data = newFeed;
     },
     handleFeedLoading: (state, action) => {
