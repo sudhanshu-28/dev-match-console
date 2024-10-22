@@ -36,9 +36,9 @@
 - Skeleton loaded component created.
 - Redux store updated for Connections & Request with data & loading state
 - Enhancement of Connections & Request page completed.
+- Send/Ignore user card from Feed.
+- Signup UI component creation and integration.
 
 # Remaining
 
-- Send/Ignore user card from Feed.
-- Signup UI creation.
 - End2End testing of Application.

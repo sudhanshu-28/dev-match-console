@@ -40,7 +40,7 @@ const Body = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const LOGIN_PATH = "/login";
+  const GUEST_ROUTES = ["/login", "/signup"];
   const currentPath = location.pathname;
 
   const userData = useSelector((store) => store?.user);
@@ -107,13 +107,13 @@ const Body = () => {
   };
 
   useEffect(() => {
-    if (!userData && currentPath !== LOGIN_PATH) {
+    if (!userData && !GUEST_ROUTES.includes(currentPath)) {
       fetchUserDetails();
     }
   }, [userData, currentPath]);
 
   useEffect(() => {
-    if (!requestData && currentPath !== LOGIN_PATH) {
+    if (!requestData && !GUEST_ROUTES.includes(currentPath)) {
       fetchConnectionRequests();
     }
   }, [userData, currentPath]);

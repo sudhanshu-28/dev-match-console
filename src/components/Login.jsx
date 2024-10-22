@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { addUser } from "../utils/userSlice";
 import { showSuccessMessage, showErrorMessage } from "../utils/notifySlice";
@@ -13,7 +13,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const [loginObj, setLoginObj] = useState({
-    emailId: "sudhanshurai@gmail.com",
+    emailId: "testuser@gmail.com",
     password: "Test@123",
   });
 
@@ -34,7 +34,7 @@ const Login = () => {
 
     // Approach 1: To write API call with axios
     // await axios
-    // .post(BACKEND_URL + LOGIN_API, loginObj, {
+    // .post(BASE_URL + LOGIN_API, loginObj, {
     //   timeout: 2000,
     //   withCredentials: true,
     // });
@@ -74,7 +74,7 @@ const Login = () => {
       <div className="card bg-base-300 w-96 shadow-xl">
         <div className="card-body">
           {/* Title  */}
-          <h2 className="card-title">{`Sign in to your account`}</h2>
+          <h2 className="card-title">{`Sign In to your account`}</h2>
 
           <div className="mt-2">
             {/* Email */}
@@ -143,7 +143,7 @@ const Login = () => {
               {isProcessing && (
                 <span className="loading loading-spinner"></span>
               )}
-              {isProcessing ? `Signing in...` : `Sign in`}
+              {isProcessing ? `Signing in...` : `Sign In`}
             </button>
           </div>
 
@@ -151,9 +151,9 @@ const Login = () => {
           <div className="mt-2">
             <p className="text-sm">
               {`Don't have an account yet?`}
-              <a href="#" className=" link-primary ml-2">
-                {`Sign up`}
-              </a>
+              <Link to="/signup" className=" link-primary ml-2">
+                {`Sign Up`}
+              </Link>
             </p>
           </div>
         </div>
