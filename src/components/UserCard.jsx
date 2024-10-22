@@ -63,7 +63,6 @@ const UserCard = ({ user, isPreview = false }) => {
           <h2 className="card-title">{fullName}</h2>
           <p>{`${age ? `${age}, ` : ``}${gender ? `${gender}` : ``}`}</p>
           <p>{about}</p>
-          <p>{`User Id: ${_id}`}</p>
           <div className="card-actions justify-center my-8">
             <button
               className="btn btn-secondary"
