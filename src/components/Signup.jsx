@@ -70,7 +70,7 @@ const Signup = () => {
       <div className="card bg-base-300 w-auto shadow-xl">
         <div className="card-body">
           {/* Title  */}
-          <h2 className="card-title">{`Sign Up to Get Access`}</h2>
+          <h2 className="card-title">{`Sign up to get access`}</h2>
 
           <div className="mt-2">
             <div className="flex w-full gap-2">
@@ -177,7 +177,7 @@ const Signup = () => {
               {isProcessing && (
                 <span className="loading loading-spinner"></span>
               )}
-              {isProcessing ? `Signing up...` : `Sign Up`}
+              {isProcessing ? `Signing up...` : `Sign up`}
             </button>
           </div>
 
@@ -186,7 +186,7 @@ const Signup = () => {
             <p className="text-sm">
               {`Already have an account?`}
               <Link to="/login" className=" link-primary ml-2">
-                {`Sign In`}
+                {`Sign in`}
               </Link>
             </p>
           </div>

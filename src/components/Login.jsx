@@ -74,7 +74,7 @@ const Login = () => {
       <div className="card bg-base-300 w-96 shadow-xl">
         <div className="card-body">
           {/* Title  */}
-          <h2 className="card-title">{`Sign In to your account`}</h2>
+          <h2 className="card-title">{`Sign in to your account`}</h2>
 
           <div className="mt-2">
             {/* Email */}
@@ -143,7 +143,7 @@ const Login = () => {
               {isProcessing && (
                 <span className="loading loading-spinner"></span>
               )}
-              {isProcessing ? `Signing in...` : `Sign In`}
+              {isProcessing ? `Signing in...` : `Sign in`}
             </button>
           </div>
 
@@ -152,7 +152,7 @@ const Login = () => {
             <p className="text-sm">
               {`Don't have an account yet?`}
               <Link to="/signup" className=" link-primary ml-2">
-                {`Sign Up`}
+                {`Sign up`}
               </Link>
             </p>
           </div>
