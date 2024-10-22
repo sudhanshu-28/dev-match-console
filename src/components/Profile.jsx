@@ -31,7 +31,7 @@ const Profile = () => {
 
     delete payload._id;
     delete payload.emailId;
-    payload.skills = skills.split(",");
+    payload.skills = skills.split(",").map((el) => el?.trim());
 
     setUpdating(true);
 
