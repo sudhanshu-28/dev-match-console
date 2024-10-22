@@ -13,8 +13,8 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const [loginObj, setLoginObj] = useState({
-    emailId: "testuser@gmail.com",
-    password: "Test@123",
+    emailId: "",
+    password: "",
   });
 
   const [isProcessing, setProcessing] = useState(false);

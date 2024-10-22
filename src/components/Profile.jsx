@@ -1,5 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addUser } from "../utils/userSlice";
@@ -11,8 +12,10 @@ import { deepClone } from "../utils/helper";
 import { BASE_URL, PROFILE_EDIT_API } from "../api-config/endpoints";
 
 const Profile = () => {
-  const user = useSelector((store) => store?.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((store) => store?.user);
 
   const [userDetail, setUserDetail] = useState(null);
   const [skills, setSkills] = useState("");
@@ -31,7 +34,7 @@ const Profile = () => {
 
     delete payload._id;
     delete payload.emailId;
-    payload.skills = skills.split(",");
+    payload.skills = skills.split(",").map((el) => el?.trim());
 
     setUpdating(true);
 
@@ -43,8 +46,13 @@ const Profile = () => {
 
         if (success && data) {
           dispatch(addUser(data));
-          window.scrollTo(0, 0);
-          dispatch(showSuccessMessage("Profile updated successfully!"));
+          dispatch(
+            showSuccessMessage(
+              "Profile updated successfully. Redirecting you to feeds."
+            )
+          );
+          window.scroll(0, 0);
+          navigate("/");
         }
       })
       .catch((err) => {

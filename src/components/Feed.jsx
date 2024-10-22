@@ -2,20 +2,21 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addFeed } from "../utils/feedSlice";
+import { addFeed, handleFeedLoading } from "../utils/feedSlice";
 import { showErrorMessage } from "../utils/notifySlice";
 
 import UserCard from "./UserCard";
 
 import { BASE_URL, FEED_API } from "../api-config/endpoints";
+import { FeedSkeleton } from "./Skeleton";
 
 const EmptyFeed = ({ fetchFeeds }) => (
   <div className="card bg-base-100 w-96 shadow-xl">
     <figure className="w-96 h-72 overflow-hidden flex flex-col p-12 text-center gap-6">
       <h1 className="text-lg">
-        Taking a break to find more great matches for you!
+        {`Taking a break to find more great matches for you!`}
       </h1>
-      <h1 className="text-lg">Come back soon for more.</h1>
+      <h1 className="text-lg">{`Come back soon for more.`}</h1>
       <button
         className="btn btn-primary"
         onClick={fetchFeeds}
@@ -27,10 +28,12 @@ const EmptyFeed = ({ fetchFeeds }) => (
 const Feed = () => {
   const dispatch = useDispatch();
 
-  const feedData = useSelector((store) => store?.feed);
+  const { data: feedData, isFetching } = useSelector((store) => store?.feed);
 
   const fetchFeeds = async () => {
     try {
+      dispatch(handleFeedLoading(true));
+
       const response = await axios.get(BASE_URL + FEED_API, {
         withCredentials: true,
       });
@@ -47,6 +50,8 @@ const Feed = () => {
     } catch (error) {
       console.error(error);
       dispatch(showErrorMessage(error || "Error fetching Feed data."));
+    } finally {
+      dispatch(handleFeedLoading(false));
     }
   };
 
@@ -58,10 +63,16 @@ const Feed = () => {
 
   return (
     <div className="flex justify-center items-center w-full my-6">
-      {!feedData || feedData?.length === 0 ? (
-        <EmptyFeed fetchFeeds={fetchFeeds} />
+      {isFetching ? (
+        <FeedSkeleton />
       ) : (
-        feedData?.[0] && <UserCard user={feedData[0]} />
+        <>
+          {!feedData || feedData?.length === 0 ? (
+            <EmptyFeed fetchFeeds={fetchFeeds} />
+          ) : (
+            feedData?.[0] && <UserCard user={feedData[0]} />
+          )}
+        </>
       )}
     </div>
   );

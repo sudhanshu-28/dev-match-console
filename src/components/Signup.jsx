@@ -13,10 +13,10 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [userObj, setUserObj] = useState({
-    firstName: "Test",
-    lastName: "User",
-    emailId: "testuser@gmail.com",
-    password: "Test@123",
+    firstName: "",
+    lastName: "",
+    emailId: "",
+    password: "",
   });
 
   const [isProcessing, setProcessing] = useState(false);

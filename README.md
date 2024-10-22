@@ -38,8 +38,8 @@
 - Enhancement of Connections & Request page completed.
 - Send/Ignore user card from Feed.
 - Signup UI component creation and integration.
+- End2End testing of Application.
 
 # Remaining
 
-- End2End testing of Application.
 - Fix Warning/Error from console.
