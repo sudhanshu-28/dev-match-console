@@ -59,19 +59,21 @@ const UserCard = ({ user, isPreview = false }) => {
         />
       </figure>
       <div className="card-body">
-        <div>
-          <h2 className="card-title">{fullName}</h2>
-          <p>{`${age ? `${age}, ` : ``}${gender ? `${gender}` : ``}`}</p>
-          <p>{about}</p>
-          <div className="card-actions justify-center my-8">
+        <div className="flex flex-col gap-1">
+          <h2 className="card-title text-2xl">{fullName}</h2>
+          <p className="text-gray-400">{`${age ? `${age}, ` : ``}${
+            gender ? `${gender}` : ``
+          }`}</p>
+          <p className="text-gray-500">{about}</p>
+          <div className="card-actions justify-center pt-4">
             <button
-              className="btn btn-secondary"
+              className="btn bg-red-500 text-white"
               onClick={
                 isPreview ? null : () => handleRequestSend("ignore", _id)
               }
             >{`Ignore`}</button>
             <button
-              className="btn btn-accent"
+              className="btn bg-blue-500 text-white"
               onClick={
                 isPreview ? null : () => handleRequestSend("interested", _id)
               }
