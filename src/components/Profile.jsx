@@ -51,6 +51,7 @@ const Profile = () => {
               "Profile updated successfully. Redirecting you to feeds."
             )
           );
+          window.scroll(0, 0);
           navigate("/");
         }
       })
