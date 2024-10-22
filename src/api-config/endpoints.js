@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:7777";
+export const BASE_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
 // Auth
 export const LOGIN_API = "/auth/login";
